@@ -6,9 +6,9 @@ This is the final submission for the Kaggle comptition on [NIPS 2017: Adversaria
 
 ### Installation:
 * Download the development dataset from [development-set.zip](https://www.kaggle.com/google-brain/nips-2017-adversarial-learning-development-set/downloads/nips-2017-adversarial-learning-development-set.zip)
-* Download Tensorflow model checkpoints, by running [download_checkpoints.sh](https://github.com/huschen/kaggle_nips17_adversarial/ckpts/download_checkpoints.sh)
+* Download Tensorflow model checkpoints, by running [download_checkpoints.sh](https://github.com/huschen/kaggle_nips17_adversarial/blob/master/ckpts/download_checkpoints.sh)
 * Download the docker container "tensorflow/tensorflow:1.1.0-rc2-py3" or "tensorflow/tensorflow:1.1.0-gpu-py3"
-* To generate adversarial samples, run [non_targeted_attack script](https://github.com/huschen/kaggle_nips17_adversarial/non_targeted) and [targeted_attack script](https://github.com/huschen/kaggle_nips17_adversarial/targeted) within the docker containers
+* To generate adversarial samples, run [non_targeted_attack script](https://github.com/huschen/kaggle_nips17_adversarial/tree/master/submission_code/non_targeted) and [targeted_attack script](https://github.com/huschen/kaggle_nips17_adversarial/tree/master/submission_code/targeted) within the docker containers
 
 ### Algorithm and Performance:
 to be added
