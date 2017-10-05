@@ -1,0 +1,15 @@
+# ignore Tensorflow checkpoints
+* ckpt
+*.ckpt.data-00000-of-00001
+*.ckpt.index
+*.ckpt.meta
+checkpoint
+
+# mac
+.DS_Store
+
+# ignore dataset images
+dataset/image*
+intermediate_results/
+output_dir/
+*.zip

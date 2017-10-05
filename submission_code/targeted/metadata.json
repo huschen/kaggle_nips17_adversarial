@@ -1,0 +1,6 @@
+{
+  "type": "targeted_attack",
+  "container": "tensorflow/tensorflow:1.1.0-rc2-py3",
+  "container_gpu": "tensorflow/tensorflow:1.1.0-gpu-py3",
+  "entry_point": "run_attack.sh"
+}
