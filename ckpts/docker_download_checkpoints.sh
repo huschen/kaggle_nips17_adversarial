@@ -4,8 +4,7 @@
 #
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-if [ -z "$1" ]
-  then
+if [ -z "$1" ]; then
     docker_img=tensorflow/tensorflow:1.1.0-gpu-py3
     docker_bin=nvidia-docker
 else
@@ -41,31 +40,12 @@ tar -xvzf ens_adv_inception_resnet_v2_2017_08_18.tar.gz
 rm ens_adv_inception_resnet_v2_2017_08_18.tar.gz
 
 
-"$docker_bin" run  -v "$TMP_DIR":/code  -w /code "$docker_img"  python ensemble_models.py
+"$docker_bin" run  -v "$TMP_DIR":/code  -w /code "$docker_img"  python ensemble_models_v0.py
 cp "$TMP_DIR"/*.ckpt* "$SCRIPT_DIR"/.
 "$docker_bin" run -v "$TMP_DIR":/code  -w /code "$docker_img" ls -l
 "$docker_bin" run -v "$TMP_DIR":/code  -w /code "$docker_img" rm -r *
 rm -rf "$TMP_DIR"
 
-# add it to all the directories that need to use it
-dir_des="$SCRIPT_DIR"/../submission_code/non_targeted/
-if [ -d "$dir_des" ]; then
-  cd "$dir_des"
-  rm mul_inception_v3.ckpt.*
-  ln -s ../../ckpts/mul_inception_v3.ckpt.* .
-  pwd
-  ls -lt "$dir_des"
-fi
-
-dir_des="$SCRIPT_DIR"/../submission_code/targeted/
-if [ -d "$dir_des" ]; then
-  cd "$dir_des"
-  rm mul_inception_v3.ckpt.*
-  ln -s ../../ckpts/mul_inception_v3.ckpt.* .
-  pwd
-  ls -lt "$dir_des"
-fi
-
-cd "$SCRIPT_DIR"/../
-mkdir -p intermediate_results/attacks_output/jing
-mkdir -p intermediate_results/targeted_attacks_output/target_jing
+cd "$SCRIPT_DIR"
+# link all checkpoints for provided models.
+"$SCRIPT_DIR"/link_checkpoints.sh
