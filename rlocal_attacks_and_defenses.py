@@ -24,9 +24,9 @@ from PIL import Image
 run_attack = True
 list_attack = []
 list_targeted = ['target_mng']
-list_defence = ['base_inception_model', 'adv_inception_v3',
-                'ens_adv_inception_resnet_v2',
-                'base_inception_resnet_v2', 'vgg16_model']
+list_defence = ['base_inception_v3', 'base_vgg16',
+                'base_inception_resnet_v2',
+                'adv_inception_v3', 'ens_adv_inception_resnet_v2']
 
 def parse_args():
   """Parses command line arguments."""
@@ -395,7 +395,8 @@ def compute_and_save_scores_and_ranking(attacks_output,
     result[0, 0] = ''
     result[1:, 0] = row_names
     result[0, 1:] = column_names
-    np.savetxt(os.path.join(output_dir, filename), result, fmt='%s', delimiter=',')
+    np.savetxt(os.path.join(output_dir, filename),
+               result, fmt='%s', delimiter=',')
 
     print('\n[%s]' % filename)
     df = pd.read_csv(os.path.join(output_dir, filename))
@@ -442,7 +443,8 @@ def compute_and_save_scores_and_ranking(attacks_output,
   write_score_matrix(output_dir, 'accuracy_on_attacks.csv',
                      accuracy_on_attacks, attack_names, defense_names)
   write_score_matrix(output_dir, 'accuracy_on_targeted_attacks.csv',
-                     accuracy_on_targeted_attacks, targeted_attack_names, defense_names)
+                     accuracy_on_targeted_attacks,
+                     targeted_attack_names, defense_names)
   write_score_matrix(output_dir, 'hit_target_class.csv',
                      hit_target_class, targeted_attack_names, defense_names)
 
@@ -458,10 +460,12 @@ def compute_and_save_scores_and_ranking(attacks_output,
   write_ranking(output_dir, 'attack_ranking.csv',
                 ['AttackName', 'Score'], attack_names, attack_scores)
   write_ranking(output_dir, 'targeted_attack_ranking.csv',
-                ['AttackName', 'Score'], targeted_attack_names, targeted_attack_scores)
+                ['AttackName', 'Score'], targeted_attack_names,
+                targeted_attack_scores)
 
   if save_all_classification:
-    with open(os.path.join(output_dir, 'all_classification_p%d.csv' % epsilon), 'w') as f:
+    with open(os.path.join(output_dir,
+                           'all_classification_p%d.csv' % epsilon), 'w') as f:
       writer = csv.writer(f)
       writer.writerow(['AttackName', 'IsTargeted', 'DefenseName', 'ImageId',
                        'PredictedLabel', 'TrueLabel', 'TargetClass'])
@@ -474,7 +478,8 @@ def compute_and_save_scores_and_ranking(attacks_output,
           writer.writerow([attack_name, is_targeted, defense_name, image_id,
                            predicted_label, true_label, target_class])
 
-    with open(os.path.join(output_dir, 'target_hard_p%d.csv' % epsilon), 'w') as f:
+    with open(os.path.join(output_dir,
+                           'target_hard_p%d.csv' % epsilon), 'w') as f:
       writer = csv.writer(f)
       writer.writerow(['AttackName', 'IsTargeted', 'DefenseName', 'ImageId',
                        'PredictedLabel', 'TrueLabel', 'TargetClass'])
@@ -488,7 +493,8 @@ def compute_and_save_scores_and_ranking(attacks_output,
             writer.writerow([attack_name, is_targeted, defense_name, image_id,
                              predicted_label, true_label, target_class])
 
-    with open(os.path.join(output_dir, 'untarget_hard_p%d.csv' % epsilon), 'w') as f:
+    with open(os.path.join(output_dir,
+                           'untarget_hard_p%d.csv' % epsilon), 'w') as f:
       writer = csv.writer(f)
       writer.writerow(['AttackName', 'IsTargeted', 'DefenseName', 'ImageId',
                        'PredictedLabel', 'TrueLabel', 'TargetClass'])
@@ -538,7 +544,8 @@ def main():
   # overwriting
 
   attacks = [a for a in raw_attacks if a.name in list_attack]
-  targeted_attacks = [a for a in raw_targeted_attacks if a.name in list_targeted]
+  targeted_attacks = [a for a in raw_targeted_attacks
+                      if a.name in list_targeted]
   defenses = [a for a in raw_defenses if a.name in list_defence]
 
   if run_attack:
@@ -561,7 +568,8 @@ def main():
   for a in attacks:
     os.makedirs(os.path.join(attacks_output_dir, a.name), exist_ok=True)
   for a in targeted_attacks:
-    os.makedirs(os.path.join(targeted_attacks_output_dir, a.name), exist_ok=True)
+    os.makedirs(os.path.join(targeted_attacks_output_dir, a.name),
+                exist_ok=True)
   for d in defenses:
     os.makedirs(os.path.join(defenses_output_dir, d.name), exist_ok=False)
 

@@ -5,7 +5,7 @@
 sdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cdir="$sdir"/..
 
-dir_des="$cdir"/models_defenses/base_inception_model/
+dir_des="$cdir"/models_defenses/base_inception_v3/
 if [ -d "$dir_des" ]; then
   cd "$dir_des"
   ln -sfn ../../ckpts/inception_v3.ckpt .
@@ -23,7 +23,7 @@ if [ -d "$dir_des" ]; then
   ln -sfn ../../ckpts/ens_adv_inception_resnet_v2.ckpt.* .
 fi
 
-dir_des="$cdir"/models_defenses/vgg16_model/
+dir_des="$cdir"/models_defenses/base_vgg16/
 if [ -d "$dir_des" ]; then
   cd "$dir_des"
   ln -sfn ../../ckpts/vgg_16.ckpt .

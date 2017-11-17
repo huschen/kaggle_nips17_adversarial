@@ -1,0 +1,114 @@
+diff -ru models_defenses/adv_inception_v3/defense.py models_defenses_py35/adv_inception_v3/defense.py
+--- models_defenses/adv_inception_v3/defense.py	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/adv_inception_v3/defense.py	2017-10-26 15:37:17.000000000 +0100
+@@ -61,7 +61,7 @@
+   idx = 0
+   batch_size = batch_shape[0]
+   for filepath in tf.gfile.Glob(os.path.join(input_dir, '*.png')):
+-    with tf.gfile.Open(filepath) as f:
++    with tf.gfile.Open(filepath, 'rb') as f:
+       image = imread(f, mode='RGB').astype(np.float) / 255.0
+     # Images for inception classifier are normalized to be in [-1, 1] interval.
+     images[idx, :, :, :] = image * 2.0 - 1.0
+diff -ru models_defenses/adv_inception_v3/metadata.json models_defenses_py35/adv_inception_v3/metadata.json
+--- models_defenses/adv_inception_v3/metadata.json	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/adv_inception_v3/metadata.json	2017-10-26 15:36:52.000000000 +0100
+@@ -1,6 +1,6 @@
+ {
+   "type": "defense",
+-  "container": "gcr.io/tensorflow/tensorflow:1.1.0",
+-  "container_gpu": "gcr.io/tensorflow/tensorflow:1.1.0-gpu",
++  "container": "tensorflow/tensorflow:1.1.0-rc2-py3",
++  "container_gpu": "tensorflow/tensorflow:1.1.0-gpu-py3",
+   "entry_point": "run_defense.sh"
+ }
+diff -ru models_defenses/adv_inception_v3/run_defense.sh models_defenses_py35/adv_inception_v3/run_defense.sh
+--- models_defenses/adv_inception_v3/run_defense.sh	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/adv_inception_v3/run_defense.sh	2017-10-26 15:03:22.000000000 +0100
+@@ -15,4 +15,4 @@
+ python defense.py \
+   --input_dir="${INPUT_DIR}" \
+   --output_file="${OUTPUT_FILE}" \
+-  --checkpoint_path=inception_v3.ckpt
++  --checkpoint_path=adv_inception_v3.ckpt
+diff -ru models_defenses/base_inception_resnet_v2/defense.py models_defenses_py35/base_inception_resnet_v2/defense.py
+--- models_defenses/base_inception_resnet_v2/defense.py	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/base_inception_resnet_v2/defense.py	2017-10-28 13:09:05.000000000 +0100
+@@ -62,7 +62,7 @@
+   idx = 0
+   batch_size = batch_shape[0]
+   for filepath in tf.gfile.Glob(os.path.join(input_dir, '*.png')):
+-    with tf.gfile.Open(filepath) as f:
++    with tf.gfile.Open(filepath, 'rb') as f:
+       image = imread(f, mode='RGB').astype(np.float) / 255.0
+     # Images for inception classifier are normalized to be in [-1, 1] interval.
+     images[idx, :, :, :] = image * 2.0 - 1.0
+diff -ru models_defenses/base_inception_resnet_v2/metadata.json models_defenses_py35/base_inception_resnet_v2/metadata.json
+--- models_defenses/base_inception_resnet_v2/metadata.json	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/base_inception_resnet_v2/metadata.json	2017-10-28 13:09:05.000000000 +0100
+@@ -1,6 +1,6 @@
+ {
+   "type": "defense",
+-  "container": "gcr.io/tensorflow/tensorflow:1.1.0",
+-  "container_gpu": "gcr.io/tensorflow/tensorflow:1.1.0-gpu",
++  "container": "tensorflow/tensorflow:1.1.0-rc2-py3",
++  "container_gpu": "tensorflow/tensorflow:1.1.0-gpu-py3",
+   "entry_point": "run_defense.sh"
+ }
+diff -ru models_defenses/base_inception_resnet_v2/run_defense.sh models_defenses_py35/base_inception_resnet_v2/run_defense.sh
+--- models_defenses/base_inception_resnet_v2/run_defense.sh	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/base_inception_resnet_v2/run_defense.sh	2017-10-29 18:55:51.000000000 +0000
+@@ -15,4 +15,4 @@
+ python defense.py \
+   --input_dir="${INPUT_DIR}" \
+   --output_file="${OUTPUT_FILE}" \
+-  --checkpoint_path=ens_adv_inception_resnet_v2.ckpt
++  --checkpoint_path=inception_resnet_v2.ckpt
+diff -ru models_defenses/base_inception_v3/defense.py models_defenses_py35/base_inception_v3/defense.py
+--- models_defenses/base_inception_v3/defense.py	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/base_inception_v3/defense.py	2017-10-26 15:37:51.000000000 +0100
+@@ -61,7 +61,7 @@
+   idx = 0
+   batch_size = batch_shape[0]
+   for filepath in tf.gfile.Glob(os.path.join(input_dir, '*.png')):
+-    with tf.gfile.Open(filepath) as f:
++    with tf.gfile.Open(filepath, 'rb') as f:
+       image = imread(f, mode='RGB').astype(np.float) / 255.0
+     # Images for inception classifier are normalized to be in [-1, 1] interval.
+     images[idx, :, :, :] = image * 2.0 - 1.0
+diff -ru models_defenses/base_inception_v3/metadata.json models_defenses_py35/base_inception_v3/metadata.json
+--- models_defenses/base_inception_v3/metadata.json	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/base_inception_v3/metadata.json	2017-10-26 15:37:36.000000000 +0100
+@@ -1,6 +1,6 @@
+ {
+   "type": "defense",
+-  "container": "gcr.io/tensorflow/tensorflow:1.1.0",
+-  "container_gpu": "gcr.io/tensorflow/tensorflow:1.1.0-gpu",
++  "container": "tensorflow/tensorflow:1.1.0-rc2-py3",
++  "container_gpu": "tensorflow/tensorflow:1.1.0-gpu-py3",
+   "entry_point": "run_defense.sh"
+ }
+diff -ru models_defenses/ens_adv_inception_resnet_v2/defense.py models_defenses_py35/ens_adv_inception_resnet_v2/defense.py
+--- models_defenses/ens_adv_inception_resnet_v2/defense.py	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/ens_adv_inception_resnet_v2/defense.py	2017-10-26 15:38:25.000000000 +0100
+@@ -62,7 +62,7 @@
+   idx = 0
+   batch_size = batch_shape[0]
+   for filepath in tf.gfile.Glob(os.path.join(input_dir, '*.png')):
+-    with tf.gfile.Open(filepath) as f:
++    with tf.gfile.Open(filepath, 'rb') as f:
+       image = imread(f, mode='RGB').astype(np.float) / 255.0
+     # Images for inception classifier are normalized to be in [-1, 1] interval.
+     images[idx, :, :, :] = image * 2.0 - 1.0
+diff -ru models_defenses/ens_adv_inception_resnet_v2/metadata.json models_defenses_py35/ens_adv_inception_resnet_v2/metadata.json
+--- models_defenses/ens_adv_inception_resnet_v2/metadata.json	2017-11-17 11:54:28.000000000 +0000
++++ models_defenses_py35/ens_adv_inception_resnet_v2/metadata.json	2017-10-26 15:38:11.000000000 +0100
+@@ -1,6 +1,6 @@
+ {
+   "type": "defense",
+-  "container": "gcr.io/tensorflow/tensorflow:1.1.0",
+-  "container_gpu": "gcr.io/tensorflow/tensorflow:1.1.0-gpu",
++  "container": "tensorflow/tensorflow:1.1.0-rc2-py3",
++  "container_gpu": "tensorflow/tensorflow:1.1.0-gpu-py3",
+   "entry_point": "run_defense.sh"
+ }

@@ -2,7 +2,7 @@
 #
 # Scripts which download checkpoints for provided models, and combine them.
 #
-
+echo "Downloading tensorflow checkpoints"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
 
@@ -31,6 +31,8 @@ tar -xvzf inception_resnet_v2_2016_08_30.tar.gz
 rm inception_resnet_v2_2016_08_30.tar.gz
 mv inception_resnet_v2_2016_08_30.ckpt inception_resnet_v2.ckpt 
 
+
+echo "Creating ensemble model checkpoints"
 # create ensemble model
 python ensemble_models_v0.py
 python ensemble_models_v1.py
